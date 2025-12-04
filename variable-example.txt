@@ -1,0 +1,47 @@
+Minimal terraform.tfvars for a 3-Node ARO Cluster (MAS Ready)
+
+  ###########################################################
+# Azure Subscription & Region
+###########################################################
+subscription_id        = "00000000-0000-0000-0000-000000000000"
+location               = "northeurope"        # or westeurope, eastus, centralindia
+resource_group_name    = "rg-aro-mas-lab"
+
+###########################################################
+# ARO Cluster Basic Settings
+###########################################################
+cluster_name           = "aro-mas-lab"
+domain                 = "vsbl2lab"           # used for APP/Ingress domain
+worker_count           = 3
+worker_vm_size         = "Standard_D8s_v5"    # Recommended for MAS Manage
+
+###########################################################
+# Networking - Minimal & MAS-Compatible
+###########################################################
+vnet_address_space     = "10.0.0.0/20"
+
+# /23 for masters (512 IPs)
+master_subnet_cidr     = "10.0.0.0/23"
+
+# /23 for workers (512 IPs)
+worker_subnet_cidr     = "10.0.2.0/23"
+
+###########################################################
+# Red Hat Pull Secret
+###########################################################
+pull_secret_file       = "./pull-secret.txt"  # Downloaded from console.redhat.com
+
+###########################################################
+# Optional but Recommended
+###########################################################
+aad_enabled            = false                # Keep disabled for lab
+monitoring_enabled     = true                 # Deploys ARO monitoring addon
+
+###########################################################
+# Tags (Optional)
+###########################################################
+tags = {
+  Environment = "Lab"
+  Project     = "MAS-Deployment"
+  Owner       = "Amba-Datt"
+}
